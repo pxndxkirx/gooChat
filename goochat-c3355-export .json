@@ -1,0 +1,52 @@
+[{
+  "business_circle" : {
+    "id_client" : {
+      "id_bussines" : {
+        "name_bussines" : "open red"
+      }
+    }
+  },
+  "customerGroups" : {
+    "id_client" : {
+      "id_Group" : {
+        "name_group" : "empresa buena onda :v"
+      },
+      "id_group2" : {
+        "name_group" : "Empresa buena onda 2 :v"
+      }
+    }
+  },
+  "customerReceivedMessage" : {
+    "id_client" : {
+      "id_client_transmiter" : {
+        "date_hours" : {
+          "company_name" : "gooMoobil",
+          "message_received" : "hola soy goMobil",
+          "viewed" : false
+        }
+      }
+    }
+  },
+  "mensagesClientSent" : {
+    "id_client" : {
+      "company_name" : "openRed",
+      "id_client_receiver" : {
+        "date_hours" : {
+          "company_name" : "gooMobil",
+          "message_received" : "hola sooy gooMobil"
+        }
+      }
+    }
+  },
+  "message_group" : {
+    "id_client" : {
+      "id_group" : {
+        "date_hours" : {
+          "id_client" : "id_client",
+          "message" : "hola grupo xD",
+          "viewed" : false
+        }
+      }
+    }
+  }
+}]

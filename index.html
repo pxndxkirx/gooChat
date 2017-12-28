@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+º
+<body>
+	<div class="row contentChat">
+		<div class="col-md-4 col-md-41">
+			<div class="contact">
+				<div class="row">
+					<div class="col-md-9">
+						<input type="text" placeholder="id" class="id" id="id">
+					</div>
+					<div class="col-md-3">
+						<button class="buttonEntrar" onclick="idClient()">Entrar</button>
+					</div>
+				</div>
+			</div>
+			<div class="contact">
+				<div class="row" id="viewMessage">
+					<!-- ultimos mensaje -->
+					<div class="col-12">
+
+
+
+
+						<div class="viewMessage" >
+							<div>
+								<div class="viewContact">
+								<img src="https://ind.proz.com/zf/images/default_user_512px.png" class="perfil" alt="">
+									<div class="contacDat">
+										<div class="nameContact">
+											<h4>Juan</h4>
+										</div>
+										<div class="rigthDat">
+											<h5>22:43<br>12/12/12</h5>
+										</div>
+									</div>
+								</div>
+								<div class="message">
+									<h5>ultimo mensaje</h5>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+
+
+					</div>
+
+
+					<div class="col-12">
+
+
+
+
+						<div class="viewMessage" id="viewMessage">
+							<div>
+								<div class="viewContact">
+								<img src="https://ind.proz.com/zf/images/default_user_512px.png" class="perfil" alt="">
+									<div class="contacDat">
+										<div class="nameContact">
+											<h4>Juan</h4>
+										</div>
+										<div class="rigthDat">
+											<h5>22:43<br>12/12/12</h5>
+										</div>
+									</div>
+								</div>
+								<div class="message">
+									<h5>ultimo mensaje</h5>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+
+
+					</div>
+					<div class="col-12">
+
+
+
+
+						<div class="viewMessage" id="viewMessage">
+							<div>
+								<div class="viewContact">
+								<img src="https://ind.proz.com/zf/images/default_user_512px.png" class="perfil" alt="">
+									<div class="contacDat">
+										<div class="nameContact">
+											<h4>Juan</h4>
+										</div>
+										<div class="rigthDat">
+											<h5>22:43<br>12/12/12</h5>
+										</div>
+									</div>
+								</div>
+								<div class="message">
+									<h5>ultimo mensaje</h5>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8 col-md-81" style="overflow-y: scroll;overflow-x: hidden;">
+			
+			<ul>
+				<li style="width:100%">
+					<div class="msj macro">
+						<div class="avatar">
+							<img class="img-circle" style="width:100%;" src="https://images-na.ssl-images-amazon.com/images/I/41Y3C1X3F9L._SY355_.jpg">
+						</div>
+							<div class="text text-l">
+								<p><h4>Dark vader</h4></p>
+								<p><h5>Hello grudd...</h5></p>
+								<p>
+									<small>4:53 PM</small>
+								</p>
+							</div>
+					</div>
+				</li>
+
+
+				<li style="width:100%;">
+					<div class="msj-rta macro" style="margin-right: 10px;">
+						<div class="text text-r">
+							<p><h4>Grudd</h4></p>
+							<p><h5>Hello dark...</h5></p>
+							<p>
+								<small>4:53 PM</small>
+							</p>
+						</div>
+						<div class="avatar" style="padding:0px 0px 0px 10px !important">
+							<img class="img-circle" style="width:100%;" src="https://cf.kizlarsoruyor.com/q7310269/op/b8c3f941-f7a0-4783-830f-fdc20ed93cd7.jpg">
+						</div>
+					</div>
+				</li>
+
+
+
+				<br>
+				<br>
+				<br>
+			</ul>
+
+
+
+
+
+
+			<div class="row send">
+				<div class="col-md-12">
+					<input type="text" placeholder="Envia un mensaje" class="enviarCaja" id="enviarCaja">
+				</div>
+			</div>
+		</div>
+	</div>
+   <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script src="js/codeConetion.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
