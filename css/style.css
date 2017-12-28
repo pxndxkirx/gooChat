@@ -54,7 +54,8 @@ margin-bottom: 20px;
 	width: 95%;
 	margin: 0 auto;
 	color: #848991;
-	border-bottom: 2px solid #848991;
+	border-bottom: 1px solid white;
+	margin-bottom: 10px;
 }
 .perfil{
 	width: 60px;
@@ -205,4 +206,20 @@ input:focus{
 	border-radius: 10px 10px;
 	font-size: 20px;
 	color: gray;
+}
+
+
+/*codigo del 28-12-17*/
+.options{
+	height: 70px;
+}
+
+.optionButton{
+	padding: 7px;
+	cursor: pointer;
+	margin-bottom: 20px;
+}
+.optionButton:hover{
+	background: #19212b;
+	border-bottom: 1px solid white;
 }
