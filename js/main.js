@@ -4,12 +4,17 @@ var refCustomerReceivedMessage;
 var refMensagesClientSent;
 var refMessage_group;
 var refBusiness_circle;
+var refListUser;
 //var json de los datos
 var jsonCustomerGroups;
 var jsonCustomerReceivedMessage;
 var jsonMensagesClientSent;
 var jsonMessage_group;
 var jsonBusiness_circle;
+var jsonListUser;
+
+
+
 //variable del id del contacto a enviar;
 var id_contact_send;
 
@@ -22,6 +27,7 @@ function idClient() {
     //doy valor a las variables de los eventos
     var id = document.getElementById('id');
     console.log("entro al idClient " + id.value);
+    refListUser=firebase.database().ref().child('list_user');
     refBusiness_circle = firebase.database().ref().child('business_circle').child(id.value);
     refCustomerGroups = firebase.database().ref().child('customerGroups').child(id.value);
     refCustomerReceivedMessage = firebase.database().ref().child('customerReceivedMessage').child(id.value);
@@ -73,21 +79,21 @@ function vigilarCambios() {
         jsonMessage_group=JSON.parse(jsonMessage_group);
     });
 
+    refListUser.on("value",snap=>{
+        jsonListUser=JSON.stringify(snap.val(),null,3);
+        jsonListUser=JSON.parse(jsonListUser);
+    });
+
+
+
     //mostrar los circulos o contactos del usuario
     refBusiness_circle.on("value", snap => {
         jsonBusiness_circle = JSON.stringify(snap.val(), null, 3);
-
         console.log("5");
         console.log(jsonBusiness_circle);
-
         jsonBusiness_circle=JSON.parse(jsonBusiness_circle);
-
-
-
         //mostrando los datos
-   
         console.log("--extraendo datos--");
-         
         document.getElementById("viewMessage").innerHTML=""; 
         var ic=0;
         for(var key in jsonBusiness_circle){
@@ -98,9 +104,6 @@ function vigilarCambios() {
              document.getElementById("viewMessage").innerHTML+="<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>"+descripcion+"</h5></div></div></div></div>";
              ic++;
         }
-
-
-
         document.getElementById("infoContact").innerHTML=ic;
     });
 }
@@ -211,13 +214,31 @@ function selectedItem(obj){
         a[i].className="viewMessage";
         console.log("entro");
     }
+    //resalto el item seleccionado
     obj.className="viewMessage selectedItem";
+
+    //le asigno el id del item seleccionado
+    id_contact_send=idItem(nameBussines);
+    console.log(id_contact_send);
 }
+
+//elimina etiquetas de un objeto
 function stripHtmlTags(elemento) {
   return elemento.textContent||elemento.innerText;
 }
 
+//funcion que me devuelve el id segun el nombre
+function idItem(name){
 
+    for(var key in jsonListUser){
 
+        if(jsonListUser[key].name_bussines == name){
+          //console.log(key + " "+jsonListUser[key].name_bussines);
+          return key;
+        }
+        //console.log(key);
+    }
+    return console.log("Este usuario no se encuentra en la lista de usuarios");
+}
 
 
