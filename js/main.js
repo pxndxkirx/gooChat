@@ -21,12 +21,12 @@ var id_contact_send;
 function idClient() {
     //doy valor a las variables de los eventos
     var id = document.getElementById('id');
-    console.log("entro al idClient " + id.vale);
+    console.log("entro al idClient " + id.value);
+    refBusiness_circle = firebase.database().ref().child('business_circle').child(id.value);
     refCustomerGroups = firebase.database().ref().child('customerGroups').child(id.value);
     refCustomerReceivedMessage = firebase.database().ref().child('customerReceivedMessage').child(id.value);
     refMensagesClientSent = firebase.database().ref().child('mensagesClientSent').child(id.value);
     refMessage_group = firebase.database().ref().child('message_group').child(id.value);
-    refBusiness_circle = firebase.database().ref().child('business_circle').child(id.value);
     vigilarCambios();
     mostrarContactos();
 }
@@ -76,14 +76,19 @@ function vigilarCambios() {
         console.log("--extraendo datos--");
          
         document.getElementById("viewMessage").innerHTML=""; 
-
+        var ic=0;
         for(var key in jsonBusiness_circle){
            console.log("name="+key+" value="+jsonBusiness_circle[key].name_bussines);
             var nombre=jsonBusiness_circle[key].name_bussines;
             var descripcion=jsonBusiness_circle[key].description;
           // document.getElementById("viewMessage").innerHTML+="  <div class='col-12'><div class='viewMessage' ><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div><div class='rigthDat'><h5>22:43<br>12/12/12</h5></div></div></div><div class='message'><h5>ultimo mensaje</h5></div></div></div></div>"
-          document.getElementById("viewMessage").innerHTML+="<div class='col-12'><div class='viewMessage' ><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>"+descripcion+"</h5></div></div></div></div>";
+             document.getElementById("viewMessage").innerHTML+="<div class='col-12'><div class='viewMessage' ><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>"+descripcion+"</h5></div></div></div></div>";
+             ic++;
         }
+
+
+
+        document.getElementById("infoContact").innerHTML=ic;
     });
 }
 
@@ -164,3 +169,83 @@ function send_message() {
         message_received: document.getElementById('enviarCaja')
     });
 }
+
+
+
+
+
+//eventos click de las opciones del chat
+
+
+document.getElementById("buttonContact").addEventListener("click",mostrarContactos);
+document.getElementById("buttonMessagge").addEventListener("click",mostrarMensajes);
+document.getElementById("buttonMessageGroup").addEventListener("click",mostrarMensajesGrupos);
+document.getElementById("buttonFriendRequest").addEventListener("click",mostrarSolicitudes);
+
+
+
+
+
+function mostrarContactos() {
+    document.getElementById("contact").className="show";
+    document.getElementById("myMessages").className="hide";
+    document.getElementById("myMessagesGroup").className="hide";
+    document.getElementById("friendRequest").className="hide";
+
+    document.getElementById("buttonContact").className="col-xs-3 col-sm-3 col-md-3 optionButton selected";
+    document.getElementById("buttonMessagge").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonMessageGroup").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonFriendRequest").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+
+    console.log("mostrando contactos");
+};
+
+
+function mostrarMensajes(){
+    document.getElementById("contact").className="hide";
+    document.getElementById("myMessages").className="show";
+    document.getElementById("myMessagesGroup").className="hide";
+    document.getElementById("friendRequest").className="hide";
+
+    document.getElementById("buttonContact").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonMessagge").className="col-xs-3 col-sm-3 col-md-3 optionButton selected";
+    document.getElementById("buttonMessageGroup").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonFriendRequest").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+
+
+
+
+    console.log("Mostrando mensajes");
+};
+function mostrarMensajesGrupos(){
+    document.getElementById("contact").className="hide";
+    document.getElementById("myMessages").className="hide";
+    document.getElementById("myMessagesGroup").className="show";
+    document.getElementById("friendRequest").className="hide";
+
+    document.getElementById("buttonContact").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonMessagge").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonMessageGroup").className="col-xs-3 col-sm-3 col-md-3 optionButton selected";
+    document.getElementById("buttonFriendRequest").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+
+
+    console.log("Mostrando mensajes de grupos");
+};
+
+function mostrarSolicitudes(){
+    document.getElementById("contact").className="hide";
+    document.getElementById("myMessages").className="hide";
+    document.getElementById("myMessagesGroup").className="hide";
+    document.getElementById("friendRequest").className="show";
+
+
+
+    document.getElementById("buttonContact").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonMessagge").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonMessageGroup").className="col-xs-3 col-sm-3 col-md-3 optionButton";
+    document.getElementById("buttonFriendRequest").className="col-xs-3 col-sm-3 col-md-3 optionButton selected";
+
+
+
+    console.log("Mostrando solicitudes de amistad");
+};

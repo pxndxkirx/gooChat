@@ -23,22 +23,22 @@
 			
 			<div class="options">
 				<div class="row" style="text-align: center;">
-					<div class="col-xs-3 col-sm-3 col-md-3 optionButton selected">
+					<div id="buttonContact" class="col-xs-3 col-sm-3 col-md-3 optionButton selected">
 						<span class="fa fa-address-book" style="color:white;"></span> 
 					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 optionButton ">
+					<div id="buttonMessagge" class="col-xs-3 col-sm-3 col-md-3 optionButton ">
 						<span class="fa fa-comment-alt" style="color:white;"></span>
 						<label class="countMessagge">
 							1
 						</label>
 					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 optionButton">
+					<div id="buttonMessageGroup" class="col-xs-3 col-sm-3 col-md-3 optionButton">
 						<span class="fa fa-comments" style="color:white;"></span>
 						<label class="countMessagge">
 							999
 						</label>
 					</div>
-					<div class="col-xs-3 col-sm-3 col-md-3 optionButton">
+					<div id="buttonFriendRequest" class="col-xs-3 col-sm-3 col-md-3 optionButton">
 						<span class="fa fa-user-plus" style="color:white;"></span>
 						<label class="countMessagge">
 							1
@@ -53,12 +53,64 @@
 
 
 
-			<div class="contact">
+			<div id="contact" class="show">
+				<div class="row">
+					<div class="col-md-12">
+							<h6 class="info"><label id="infoContact">0</label> Contactos</h6>
+					</div>		
+				</div>
 				<div class="row" id="viewMessage">
-					<!-- ultimos mensaje -->
-					
+					<!--contactos circulo empresarial -->
+
 				</div>
 			</div>
+			
+			<!-- mensajes recibidos y enviados -->
+
+			<div id="myMessages" class="hide">
+				<div class="row">
+					<div class="col-md-12">
+							<h6 class="info"><label id="infoMessages">0</label> Mensajes</h6>
+					</div>		
+				</div>
+				<div class="row" id="viewMessages">
+					<!-- ultimos mensaje -->
+
+				</div>
+			</div>
+
+			<!-- fin mensajes recibidos y enviados -->
+
+			<!-- mensajes recibidos ye eviados de grupos -->
+			<div id="myMessagesGroup" class="hide">
+				<div class="row">
+					<div class="col-md-12">
+							<h6 class="info"><label id="infoMessagesGroup">0</label> Mensajes grupos</h6>
+					</div>		
+				</div>
+				<div class="row" id="viewMessages">
+					<!-- ultimos mensaje -->
+
+				</div>
+			</div>
+			<!-- fin mensajes resibidos y enviados de grupos -->
+			
+			<!-- solicitudes de amistad -->
+
+			<div id="friendRequest" class="hide">
+				<div class="row">
+					<div class="col-md-12">
+							<h6 class="info"><label id="infoFriendRequest">0</label> Solicitudes de amistad</h6>
+					</div>		
+				</div>
+				<div class="row" id="viewMessages">
+					<!-- ultimos mensaje -->
+
+				</div>
+			</div>
+			<!-- fin solicitudes de amistad -->
+
+
 
 
 
