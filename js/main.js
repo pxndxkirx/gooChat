@@ -47,9 +47,8 @@ function vigilarCambios() {
         jsonListUser=JSON.stringify(snap.val(),null,3);
         jsonListUser=JSON.parse(jsonListUser);
     });
-   //recupero los mensajes del usuario
-
    
+//recupero el historial de mensajes del usuario
  refChat.on("value",snap=>{
         jsonChat=JSON.stringify(snap.val(),null,3);
         console.log(jsonChat);
@@ -76,21 +75,28 @@ function vigilarCambios() {
                 }
 
             }
-
             document.getElementById('infoMessages').innerHTML=sinLeer;
             document.getElementById('unreadMessage').innerHTML=sinLeer;
-            document.getElementById('viewMessages').innerHTML+="<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div><div class='rigthDat'><h5>"+hora+"<br>"+fecha+"</h5></div></div></div><div class='message'><h5>"+nameBussines(id_ultimo)+": "+ultimoMensaje+"</h5></div></div></div></div>";
-
-
-
-
-
+            if(id.value!=id_ultimo){
+                document.getElementById('viewMessages').innerHTML+="<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div><div class='rigthDat'><h5>"+hora+"<br>"+fecha+"</h5></div></div></div><div class='message'><h5>"+nameBussines(id_ultimo)+": "+ultimoMensaje+"</h5></div></div></div></div>";
+            }else{
+                document.getElementById('viewMessages').innerHTML+="<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div><div class='rigthDat'><h5>"+hora+"<br>"+fecha+"</h5></div></div></div><div class='message'><h5> Yo : "+ultimoMensaje+"</h5></div></div></div></div>"; 
+            }
             console.log("nombre:"+nombre);
+            console.log("id-ultimo:"+id_ultimo);
+            console.log("message bussines end"+nameBussines(id_ultimo));
             console.log("ultimo mensaje: "+ultimoMensaje);
             console.log("fecha y hora: "+fecha+" "+hora);
+            //funcion ke muestra los mensages del chat  
+            mostrarMensajesChat();
         }
 
     });
+
+
+
+
+
 
     //mostrar los circulos o contactos del usuario
     refBusiness_circle.on("value", snap => {
@@ -133,6 +139,8 @@ function selectedItem(obj){
     //le asigno el id del item seleccionado
     id_contact_send=idItem(nameBussines);
 
+    //funcion ke muestra los mensages del chat  
+    mostrarMensajesChat();
     console.log(id_contact_send);
 
 
@@ -183,15 +191,68 @@ function nameBussines(id){
 
 //esta funcion me mostrara todos los mensajes ke se tubo con un usuario en espesifico
 
-function mostrarMensajes(){
+function mostrarMensajesChat(){
+        //borro el chat
+        document.getElementById('messagesContainer').innerHTML="<br><br><br>";  
+        var jsonT=jsonChat[id_contact_send];
+        for(var k in jsonT){
+            console.log("codigo mensaje "+k);
+            console.log("fecha y hora"+jsonT[k].date+" "+jsonT[k].hours);
+            console.log("de "+nameBussines(jsonT[k].id)+" mensaje: "+jsonT[k].message);
+            // llenando los datos en la venttana de mensajes
+            var nombre=nameBussines(jsonT[k].id);
+            var hora=jsonT[k].hours;
+            var mensaje=jsonT[k].message;
+            console.log("mi id es "+id.value);
+            console.log("id mensaje "+jsonT[k].id);
+            if(id.value!=jsonT[k].id){
+                //mensajes recibidos
+                document.getElementById('messagesContainer').innerHTML+="<li style='width:100%'><div class='msj macro'><div class='avatar'><img class='img-circle' style='width:100%;' src='https://images-na.ssl-images-amazon.com/images/I/41Y3C1X3F9L._SY355_.jpg'></div><div class='text text-l'><p><h4>"+nombre+"</h4></p><p><h5>"+mensaje+"</h5></p><p><small>"+hora+"</small></p></div></div></li>";
+            }else{
+                //menssajes enviados
+                document.getElementById('messagesContainer').innerHTML+="<li style='width:100%;'><div class='msj-rta macro' style='margin-right: 10px;'><div class='text text-r'><p><h4>Yo</h4></p><p><h5>"+mensaje+"</h5></p><p><small>"+hora+"</small></p></div><div class='avatar' style='padding:0px 0px 0px 10px !important'><img class='img-circle' style='width:100%;' src='https://cf.kizlarsoruyor.com/q7310269/op/b8c3f941-f7a0-4783-830f-fdc20ed93cd7.jpg'></div></div></li>";
+            }
+        }
+        document.getElementById('messagesContainer').innerHTML+="<br><br><br><br><br>"; 
 
+        //cada ke llega un nuevo mensaje el scroll es envado abajo
+
+        document.getElementById('scrollContainer').scrollTop=document.getElementById('scrollContainer').scrollHeight;
+        console.log("entra alcambio del scroll");
+
+};
+
+
+
+
+//evento ke envia un mensaje
+function sendMessage(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+    //guardo el mensaje en enviados 
+    var f=new Date();
+    var fecha=f.getDate()+"/"+(f.getMonth()+1)+"/"+f.getFullYear();
+    var hora=f.getHours()+":"+f.getMinutes();
+
+    var referencia1 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(idNewMessage(id_contact_send));
+    var referencia2 = databaseService.ref('chat').child(id_contact_send).child(id.value).child(idNewMessage(id.value));
+    if (tecla==13) {
+            referencia1.update({
+                date:fecha,
+                hours:hora,
+                id:id.value,
+                message:document.getElementById('enviarCaja').value,
+                viewed:false
+            });
+            referencia2.update({
+                 date:fecha,
+                hours:hora,
+                id:id.value,
+                message:document.getElementById('enviarCaja').value,
+                viewed:false
+            });
+            document.getElementById('enviarCaja').value="";
+    };
 }
-
-
-
-
-
-
 
 
 
@@ -207,7 +268,7 @@ function mostrarMensajes(){
 //funcion que crea el nuevo id para el nuevo mensaje
 function idNewMessage(id){
     var f=new Date();
-    return f.getHours()+""+f.getMinutes()+""+f.getSeconds()+""+mls(f.getTime())+""+f.getDate()+""+(f.getMonth()+1)+""+f.getFullYear()+id;
+    return f.getFullYear()+""+(f.getMonth()+1)+""+f.getDate()+""+f.getHours()+""+f.getMinutes()+""+f.getSeconds()+""+mls(f.getTime())+""+id;
 }
 //funcion que me devuelve los milisegundos de un estring del getTime();
 function mls(b){
@@ -233,7 +294,8 @@ document.getElementById("buttonContact").addEventListener("click",mostrarContact
 document.getElementById("buttonMessagge").addEventListener("click",mostrarMensajes);
 document.getElementById("buttonMessageGroup").addEventListener("click",mostrarMensajesGrupos);
 document.getElementById("buttonFriendRequest").addEventListener("click",mostrarSolicitudes);
-
+//evento enter para el imput 
+document.getElementById("enviarCaja").addEventListener("keypress",sendMessage);
 
 
 
