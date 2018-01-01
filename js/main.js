@@ -233,7 +233,7 @@ function sendMessage(e){
     var fecha=f.getDate()+"/"+(f.getMonth()+1)+"/"+f.getFullYear();
     var hora=f.getHours()+":"+f.getMinutes();
 
-    var referencia1 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(idNewMessage(id_contact_send));
+    var referencia1 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(idNewMessage(id.value));
     var referencia2 = databaseService.ref('chat').child(id_contact_send).child(id.value).child(idNewMessage(id.value));
     if (tecla==13) {
             referencia1.update({
@@ -267,9 +267,35 @@ function sendMessage(e){
 
 //funcion que crea el nuevo id para el nuevo mensaje
 function idNewMessage(id){
-    var f=new Date();
-    return f.getFullYear()+""+(f.getMonth()+1)+""+f.getDate()+""+f.getHours()+""+f.getMinutes()+""+f.getSeconds()+""+mls(f.getTime())+""+id;
+        var f=new Date();
+        var seg=f.getSeconds();
+        var min=f.getMinutes();
+        var hr=f.getHours();
+        var mes=f.getMonth();
+        var dia=f.getDate();
+        if((mes+1)<10){
+            if((mes+1)==13){
+                mes="01";
+            }
+            mes="0"+mes;
+        }else{
+            mes+=1;
+        }
+        if(dia<10){
+            dia="0"+dia;
+        }
+        if(seg<10){
+            seg="0"+seg;
+        }
+        if(min<10){
+            min="0"+min;
+        }
+        if(hr<10){
+            hr="0"+hr;
+        }
+        return f.getFullYear()+""+mes+""+dia+""+hr+""+min+""+seg+""+mls(f.getTime())+""+id;
 }
+
 //funcion que me devuelve los milisegundos de un estring del getTime();
 function mls(b){
     a=b+"";
