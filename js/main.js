@@ -41,6 +41,7 @@ function vigilarCambios(){
     refListUser.on("value", snap => {
         jsonListUser = JSON.stringify(snap.val(), null, 3);
         jsonListUser = JSON.parse(jsonListUser);
+        buscar();
     });
 
     //recupero el historial de mensajes del usuario
@@ -345,35 +346,56 @@ function sendMessage(e) {
 function buscar(e){
     //console.log(String.fromCharCode(e.which));
     console.log("buscando");
+    // tecla = (document.all) ? e.keyCode : e.which; 
+    // if (tecla==8) alert('Tecla pulsada'); 
 
-
-    var b=document.getElementById("search").value+String.fromCharCode(e.which);
-    var resultado;
+    var b=document.getElementById("search").value;
     var et="";
-
-    for(k in jsonListUser){
-        //console.log(k);
-        //console.log(jsonListUser[k].name_bussines);
-        var nombre=(jsonListUser[k].name_bussines).toLowerCase();
-        if(nombre.indexOf(b.toLowerCase())!=-1){
-            if(b!=""){
-                console.log(nombre+ "; similitud :"+b);
-                var nombre=jsonListUser[k].name_bussines;
-                var descripcion=jsonListUser[k].description;
-                if (urlImg(k + "") != "") {
-                    et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-                } else {
-                    et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+    var contador=0;
+    if(b!=""){
+        for(var k in jsonListUser){
+            var nombre=(jsonListUser[k].name_bussines).toLowerCase();
+            if(nombre.indexOf(b.toLowerCase())!=-1){
+                if(b!=""){
+                    console.log(nombre+ "; similitud :"+b);
+                    var nombre=jsonListUser[k].name_bussines;
+                    var descripcion=jsonListUser[k].description;
+                    if (urlImg(k + "") != "") {
+                        et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                    } else {
+                        et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                    }
+                    contador++;
                 }
-                
             }
         }
+        document.getElementById('infoMessagesGroup').innerHTML=contador;
+        document.getElementById('resultSearch').innerHTML=et;
+    }else{
+        console.log("mostrando todos los usuarios");
+        mostrarTodos();
     }
-    document.getElementById('resultSearch').innerHTML=et;
+    
 }
 
-
-
+// esta funcion me mostrara todos los usuaros registrados en open red
+function mostrarTodos(){
+    console.log("entro correctamente a mostrar todos");
+    var et="";
+    for(var k in jsonListUser){
+        var nombre=jsonListUser[k].name_bussines;
+        var descripcion=jsonListUser[k].description;
+        console.log(nombre+"  "+descripcion);
+        if (urlImg(k + "") != "") {
+            et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+        } else {
+            et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+        }       
+    }
+    document.getElementById('infoMessagesGroup').innerHTML="(Mostrando todos)";
+    document.getElementById('resultSearch').innerHTML=et;
+    console.log("termino correctamente la funcion");
+}
 
 
 
@@ -401,7 +423,7 @@ document.getElementById("buttonMessageGroup").addEventListener("click", mostrarM
 document.getElementById("buttonFriendRequest").addEventListener("click", mostrarSolicitudes);
 //evento enter para el imput 
 document.getElementById("enviarCaja").addEventListener("keypress", sendMessage);
-document.getElementById("search").addEventListener("keypress",buscar);
+document.getElementById("search").addEventListener("keyup",buscar);
 
 
 
