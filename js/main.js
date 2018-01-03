@@ -108,9 +108,9 @@ function vigilarCambios(){
         console.log("mostrando mensajes desde la referencia");
         mostrarMensajesChat();
         console.log("mostrando mensajes desde la referencia2");
-        if(id_contact_send!=0){
-            mostrarMensajesChat();
-        }
+        // if(id_contact_send!=0){
+        //     mostrarMensajesChat();
+        // }
     });
 
 
@@ -169,9 +169,9 @@ function selectedItem(obj) {
 
     document.getElementById('messagesContainer').innerHTML = "";
     mostrarMensajesChat();
-    if(id_contact_send!=0){
-        mostrarMensajesChat();
-    }
+    // if(id_contact_send!=0){
+    //     mostrarMensajesChat();
+    // }
 }
 
 //elimina etiquetas de un objeto
@@ -344,11 +344,7 @@ function sendMessage(e) {
 }
 
 function buscar(e){
-    //console.log(String.fromCharCode(e.which));
     console.log("buscando");
-    // tecla = (document.all) ? e.keyCode : e.which; 
-    // if (tecla==8) alert('Tecla pulsada'); 
-
     var b=document.getElementById("search").value;
     var et="";
     var contador=0;
