@@ -13,7 +13,7 @@ var jsonChat;
 
 
 //variable del id del contacto a enviar;
-var id_contact_send;
+var id_contact_send=0;
 
 var id;
 
@@ -28,17 +28,12 @@ function idClient() {
     refBusiness_circle = firebase.database().ref().child('business_circle').child(id.value);
     refChat = firebase.database().ref().child('chat').child(id.value);
 
-
-
     vigilarCambios();
     mostrarContactos();
+    
 }
 
 function vigilarCambios(){
-
-    //console.log("entro a vigilar cambios");
-
-
 
 
 
@@ -55,8 +50,7 @@ function vigilarCambios(){
         jsonChat = JSON.parse(jsonChat);
         //funcion ke muestra los mensages del chat
 
-
-        document.getElementById('viewMessages').innerHTML = "";
+        var viewMessages="";
         var sinLeer = 0;
         var nombre;
         var idMensaje;
@@ -79,7 +73,9 @@ function vigilarCambios(){
                 if (id.value != jsonTemp[k].id) {
                     if (jsonTemp[k].viewed == false) {
                         sinLeer++;
+                            console.log(jsonTemp);
                         indi++;
+                            console.log(indi);
                     }
                 }
 
@@ -94,29 +90,26 @@ function vigilarCambios(){
 
             if (urlImg(idMensaje) != "") {
                 if (id.value != id_ultimo) {
-                    document.getElementById('viewMessages').innerHTML += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(idMensaje) + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5>" + nameBussines(id_ultimo) + ": " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
+                    viewMessages += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(idMensaje) + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5>" + nameBussines(id_ultimo) + ": " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
                 } else {
-                    document.getElementById('viewMessages').innerHTML += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(idMensaje) + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5> Yo : " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
+                    viewMessages += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(idMensaje) + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5> Yo : " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
                 }
             } else {
                 if (id.value != id_ultimo) {
-                    document.getElementById('viewMessages').innerHTML += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5>" + nameBussines(id_ultimo) + ": " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
+                    viewMessages += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5>" + nameBussines(id_ultimo) + ": " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
                 } else {
-                    document.getElementById('viewMessages').innerHTML += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5> Yo : " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
+                    viewMessages += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div><div class='rigthDat'><h5>" + hora + "<br>" + fecha + "</h5></div></div></div><div class='message'><h5> Yo : " + ultimoMensaje + "</h5></div></div>" + etiqueta + "</div></div>";
                 }
             }
+            document.getElementById('viewMessages').innerHTML=viewMessages;
 
-
-            //console.log("nombre:" + nombre);
-            //console.log("id-ultimo:" + id_ultimo);
-            //console.log("message bussines end" + nameBussines(id_ultimo));
-            //console.log("ultimo mensaje: " + ultimoMensaje);
-            //console.log("fecha y hora: " + fecha + " " + hora);
-        }
+         }
         console.log("mostrando mensajes desde la referencia");
         mostrarMensajesChat();
         console.log("mostrando mensajes desde la referencia2");
-        mostrarMensajesChat();
+        if(id_contact_send!=0){
+            mostrarMensajesChat();
+        }
     });
 
 
@@ -131,8 +124,8 @@ function vigilarCambios(){
         //console.log(jsonBusiness_circle);
         jsonBusiness_circle = JSON.parse(jsonBusiness_circle);
         //mostrando los datos
-        //console.log("--extraendo datos--");
-        document.getElementById("viewMessage").innerHTML = "";
+        var viewMessage="";
+        
         var ic = 0;
         for (var key in jsonBusiness_circle) {
             // //console.log("name="+key+" value="+jsonBusiness_circle[key].name_bussines);
@@ -140,12 +133,13 @@ function vigilarCambios(){
             var descripcion = jsonBusiness_circle[key].description;
             // document.getElementById("viewMessage").innerHTML+="  <div class='col-12'><div class='viewMessage' ><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div><div class='rigthDat'><h5>22:43<br>12/12/12</h5></div></div></div><div class='message'><h5>ultimo mensaje</h5></div></div></div></div>"
             if (urlImg(key + "") != "") {
-                document.getElementById("viewMessage").innerHTML += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(key + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                viewMessage += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(key + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
             } else {
-                document.getElementById("viewMessage").innerHTML += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                viewMessage += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
             }
             ic++;
         }
+        document.getElementById('viewMessage').innerHTML=viewMessage;
         document.getElementById("infoContact").innerHTML = ic;
     });
 }
@@ -174,8 +168,9 @@ function selectedItem(obj) {
 
     document.getElementById('messagesContainer').innerHTML = "";
     mostrarMensajesChat();
-    //console.log(id_contact_send);
-
+    if(id_contact_send!=0){
+        mostrarMensajesChat();
+    }
 }
 
 //elimina etiquetas de un objeto
@@ -189,12 +184,10 @@ function idItem(name) {
     for (var key in jsonListUser) {
 
         if (jsonListUser[key].name_bussines == name) {
-            ////console.log(key + " "+jsonListUser[key].name_bussines);
             return key;
         }
-        ////console.log(key);
     }
-    return //console.log("Este usuario no se encuentra en la lista de usuarios");
+    return console.log("Este usuario no se encuentra en la lista de usuarios");
 }
 
 
@@ -236,58 +229,49 @@ function urlImg(id) {
 function mostrarMensajesChat(){
     //borro el chat
     console.log("ejecutaando");
-    document.getElementById('messagesContainer').innerHTML="";
-    document.getElementById('messagesContainer').innerHTML += "<br><br><br>";
+    var mensajes="";
+    mensajes += "<br><br><br>";
     //console.log(id_contact_send);
     try {
         var jsonT = jsonChat[id_contact_send];
 
         var fecha = "0/0/0";
         for (var k in jsonT) {
-            //console.log("codigo mensaje " + k);
-
-            //console.log("fecha y hora" + jsonT[k].date + " " + jsonT[k].hours);
-            //console.log("de " + nameBussines(jsonT[k].id) + " mensaje: " + jsonT[k].message);
-            // llenando los datos en la venttana de mensajes
             var nombre = nameBussines(jsonT[k].id);
             var hora = jsonT[k].hours;
             var mensaje = jsonT[k].message;
-            console.log(mensaje);
-            //console.log("mi id es " + id.value);
-            //console.log("id mensaje " + jsonT[k].id);
-            //console.log("my url es "+urlImg(jsonT[k].id+""));
-
             var urlImgU = urlImg(jsonT[k].id + "");
             //reviso la fecha del mensaje para ponerlo como info en el chat
             if (fecha != jsonT[k].date) {
                 fecha = jsonT[k].date;
-                document.getElementById('messagesContainer').innerHTML += "<center><br><br><div style='color:gray;'>" + jsonT[k].date + "</div><br><br></center>";
+                mensajes += "<center><br><br><div style='color:gray;'>" + jsonT[k].date + "</div><br><br></center>";
             }
+            
+            viewedMessage(k + "");
+
 
             if (urlImgU != "") {
                 if (id.value != jsonT[k].id) {
-                    viewedMessage(k + "");
                     //mensajes recibidos
-                    document.getElementById('messagesContainer').innerHTML += "<li style='width:100%'><div class='msj macro'><div class='avatar'><img class='img-circle' style='width:100%;' src='" + urlImgU + "'></div><div class='text text-l'><p><h4>" + nombre + "</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div></div></li>";
+                    mensajes += "<li style='width:100%'><div class='msj macro'><div class='avatar'><img class='img-circle' style='width:100%;' src='" + urlImgU + "'></div><div class='text text-l'><p><h4>" + nombre + "</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div></div></li>";
                 } else {
                     //menssajes enviados
-
-                    document.getElementById('messagesContainer').innerHTML += "<li style='width:100%;'><div class='msj-rta macro' style='margin-right: 10px;'><div class='text text-r'><p><h4>Yo</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div><div class='avatar' style='padding:0px 0px 0px 10px !important'><img class='img-circle' style='width:100%;' src='" + urlImgU + "'></div></div></li>";
+                    mensajes += "<li style='width:100%;'><div class='msj-rta macro' style='margin-right: 10px;'><div class='text text-r'><p><h4>Yo</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div><div class='avatar' style='padding:0px 0px 0px 10px !important'><img class='img-circle' style='width:100%;' src='" + urlImgU + "'></div></div></li>";
                 }
             } else {
                 if (id.value != jsonT[k].id) {
-                    viewedMessage(k + "");
+                    
                     //mensajes recibidos
-                    document.getElementById('messagesContainer').innerHTML += "<li style='width:100%'><div class='msj macro'><div class='avatar'><img class='img-circle' style='width:100%;' src='https://ind.proz.com/zf/images/default_user_512px.png'></div><div class='text text-l'><p><h4>" + nombre + "</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div></div></li>";
+                    mensajes += "<li style='width:100%'><div class='msj macro'><div class='avatar'><img class='img-circle' style='width:100%;' src='https://ind.proz.com/zf/images/default_user_512px.png'></div><div class='text text-l'><p><h4>" + nombre + "</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div></div></li>";
                 } else {
                     //menssajes enviados
-                    document.getElementById('messagesContainer').innerHTML += "<li style='width:100%;'><div class='msj-rta macro' style='margin-right: 10px;'><div class='text text-r'><p><h4>Yo</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div><div class='avatar' style='padding:0px 0px 0px 10px !important'><img class='img-circle' style='width:100%;' src='https://ind.proz.com/zf/images/default_user_512px.png'></div></div></li>";
+                    mensajes += "<li style='width:100%;'><div class='msj-rta macro' style='margin-right: 10px;'><div class='text text-r'><p><h4>Yo</h4></p><p><h5>" + mensaje + "</h5></p><p><small>" + hora + "</small></p></div><div class='avatar' style='padding:0px 0px 0px 10px !important'><img class='img-circle' style='width:100%;' src='https://ind.proz.com/zf/images/default_user_512px.png'></div></div></li>";
                 }
             }
         }
-        document.getElementById('messagesContainer').innerHTML += "<br><br><br><br><br>";
+        mensajes += "<br><br><br><br><br>";
         console.log("aqui deberia de terminar");
-
+        document.getElementById('messagesContainer').innerHTML=mensajes;
         //cada ke llega un nuevo mensaje el scroll es envado abajo
 
         document.getElementById('scrollContainer').scrollTop = document.getElementById('scrollContainer').scrollHeight;
@@ -299,14 +283,10 @@ function mostrarMensajesChat(){
 }
 
 
-// funcion que le da el visto a los mensajes
 function viewedMessage(codeMessage) {
-    var ref1 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(codeMessage);
-    var ref2 = databaseService.ref('chat').child(id_contact_send).child(id.value).child(codeMessage);
-    ref1.update({
-        viewed: true
-    });
-    ref2.update({
+   var ref2 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(codeMessage);
+    
+     ref2.update({
         viewed: true
     });
 }
@@ -339,7 +319,7 @@ function sendMessage(e) {
             hours: hora,
             id: id.value,
             message: document.getElementById('enviarCaja').value,
-            viewed: false
+            viewed: true
         });
         referencia2.update({
             date: fecha,
@@ -366,59 +346,12 @@ function sendMessage(e) {
 
 //funcion que crea el nuevo id para el nuevo mensaje
 function idNewMessage(id) {
-    // var fecha="<?php echo date('d M Y G:i:s');?>";
-    // var f =new Date(fecha);
-    // var seg = f.getSeconds();
-    // var min = f.getMinutes();
-    // var hr = f.getHours();
-
-    // var mes = f.getMonth();
-    // var dia = f.getDate();
-
-    // if ((mes + 1) < 10) {
-    //     if ((mes + 1) == 13) {
-    //          mes = "01";
-    //      }else{
-    //          mes = "0" + (mes+1);
-    //      }
-    // } 
-    // if (dia < 10) {
-    //     dia = "0" + dia;
-    // }
-    // if (seg < 10) {
-    //     seg = "0" + seg;
-    // }
-    // if (min < 10) {
-    //     min = "0" + min;
-    // }
-    // if (hr < 10) {
-    //     hr = "0" + hr;
-    // }
-
-    // var cad = f.getFullYear() + "" + mes + "" + dia + "" + hr + "" + min + "" + seg + "" + mls(f.getTime());
-
-    //return f.getFullYear() + "" + mes + "" + dia + "" + hr + "" + min + "" + seg + "" + id;
-    if (id < 10) {
+   if (id < 10) {
         return "message0" + id;
     } else {
         return "message" + id;
     }
 }
-
-//funcion que me devuelve los milisegundos de un estring del getTime();
-// function mls(b) {
-//     a = b + "";
-//     //console.log(a.length);
-//     return a.substr(a.length - 3, 1);
-// }
-
-
-
-
-
-
-
-
 
 
 
