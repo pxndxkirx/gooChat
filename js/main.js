@@ -311,10 +311,19 @@ function sendMessage(e) {
     } catch (e) {
         l = 0;
     }
+
+       
+
+
+    if (tecla == 13) {
     var referencia1 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(idNewMessage((l + 1) + ''));
     var referencia2 = databaseService.ref('chat').child(id_contact_send).child(id.value).child(idNewMessage((l + 1) + ''));
-    if (tecla == 13) {
-        referencia1.update({
+   
+
+
+
+
+   referencia1.update({
             date: fecha,
             hours: hora,
             id: id.value,
@@ -333,7 +342,35 @@ function sendMessage(e) {
     //console.log("enviado");
 }
 
+function buscar(e){
+    //console.log(String.fromCharCode(e.which));
+    console.log("buscando");
 
+
+    var b=document.getElementById("search").value+String.fromCharCode(e.which);
+    var resultado;
+    var et="";
+
+    for(k in jsonListUser){
+        //console.log(k);
+        //console.log(jsonListUser[k].name_bussines);
+        var nombre=(jsonListUser[k].name_bussines).toLowerCase();
+        if(nombre.indexOf(b.toLowerCase())!=-1){
+            if(b!=""){
+                console.log(nombre+ "; similitud :"+b);
+                var nombre=jsonListUser[k].name_bussines;
+                var descripcion=jsonListUser[k].description;
+                if (urlImg(k + "") != "") {
+                    et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                } else {
+                    et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                }
+                
+            }
+        }
+    }
+    document.getElementById('resultSearch').innerHTML=et;
+}
 
 
 
@@ -364,6 +401,8 @@ document.getElementById("buttonMessageGroup").addEventListener("click", mostrarM
 document.getElementById("buttonFriendRequest").addEventListener("click", mostrarSolicitudes);
 //evento enter para el imput 
 document.getElementById("enviarCaja").addEventListener("keypress", sendMessage);
+document.getElementById("search").addEventListener("keypress",buscar);
+
 
 
 
