@@ -286,7 +286,6 @@ function mostrarMensajesChat(){
 
 function viewedMessage(codeMessage) {
    var ref2 = databaseService.ref('chat').child(id.value).child(id_contact_send).child(codeMessage);
-    
      ref2.update({
         viewed: true
     });
@@ -357,9 +356,9 @@ function buscar(e){
                     var nombre=jsonListUser[k].name_bussines;
                     var descripcion=jsonListUser[k].description;
                     if (urlImg(k + "") != "") {
-                        et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                        et += "<div class='col-12'><div style='color:green;margin-right:3%;float:right;z-index:1000;font-size:20px;' onclick='sendRequest(this)'><i class='fa fa-plus-circle' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
                     } else {
-                        et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                        et += "<div class='col-12'><div style='color:green;margin-right:3%;float:right;z-index:1000;font-size:20px;' onclick='sendRequest(this)'><i class='fa fa-plus-circle' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
                     }
                     contador++;
                 }
@@ -383,9 +382,9 @@ function mostrarTodos(){
         var descripcion=jsonListUser[k].description;
         console.log(nombre+"  "+descripcion);
         if (urlImg(k + "") != "") {
-            et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+            et += "<div class='col-12'><div style='color:green;margin-right:3%;float:right;z-index:1000;font-size:20px;' onclick='sendRequest(this)'><i class='fa fa-plus-circle' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
         } else {
-            et += "<div class='col-12'><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+            et += "<div class='col-12'><div style='color:green;margin-right:3%;float:right;z-index:1000;font-size:20px;' onclick='sendRequest(this)'><i class='fa fa-plus-circle' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
         }       
     }
     document.getElementById('infoMessagesGroup').innerHTML="(Mostrando todos)";
@@ -408,8 +407,22 @@ function idNewMessage(id) {
     }
 }
 
-//funcion ke envia la solicitud de amistad
 
+
+
+//funcion ke envia la solicitud de amistad
+function sendRequest(name){
+    console.log(name.parentNode.childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0]);
+    var nombre=stripHtmlTags(name.parentNode.childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0]);
+    var refEnviarPeticion= databaseService.ref('friendRequest').child(idItem(nombre)).child(id.value);
+    refEnviarPeticion.update({
+        lagree:false,
+        toRefuse:false
+    });
+    console.log("La solicitud de amistad fue enviada correctamente");
+
+}
+// fin de la funcion ke envia la peticion
 
 
 
