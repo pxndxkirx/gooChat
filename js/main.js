@@ -408,6 +408,36 @@ function idNewMessage(id) {
     }
 }
 
+//funcion ke envia la solicitud de amistad
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //eventos click de las opciones del chat
