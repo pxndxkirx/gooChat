@@ -372,12 +372,24 @@ function buscar(e){
                     console.log(nombre+ "; similitud :"+b);
                     var nombre=jsonListUser[k].name_bussines;
                     var descripcion=jsonListUser[k].description;
-                    if (urlImg(k + "") != "") {
-                        et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-                    } else {
-                        et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-                    }   
-                    contador++;
+                    if(k!=id.value){
+                        if(!verSolicitud(k+'')){
+                            if (urlImg(k + "") != "") {
+                                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                            } else {
+                                    et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                            }       
+                        }else{
+                            console.log("entro a true");
+                            //en el  caso de ke ya se haya enviado la solicitud de amistad los el boton hara ora funcion distinta que sera la de cancelar la solicitud
+                            if (urlImg(k + "") != "") {
+                                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequestCancel(this)'><i class='fa fa-minus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                            } else {
+                                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequestCancel(this)'><i class='fa fa-minus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                            }  
+                        }
+                        contador++;
+                    }
                 }
             }
         }
@@ -402,21 +414,27 @@ function mostrarTodos(){
         var descripcion=jsonListUser[k].description;
         //verifico si ya se envio la solisitud de amistad
         console.log("mostrando estado "+verSolicitud(k+'')+" prueba"+(true));
-        if(!verSolicitud(k+'')){
-            if (urlImg(k + "") != "") {
-                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-            } else {
-                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-            }       
-        }else{
-            console.log("entro a true");
-            //en el  caso de ke ya se haya enviado la solicitud de amistad los el boton hara ora funcion distinta que sera la de cancelar la solicitud
-            if (urlImg(k + "") != "") {
-                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequestCancel(this)'><i class='fa fa-minus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-            } else {
-                et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequestCancel(this)'><i class='fa fa-minus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-            }  
+        // verifico de ke mi empresa no aparesca en la lista
+        if(k!=id.value){
+            //verifico si no se envio la solicitud
+            if(!verSolicitud(k+'')){
+                if (urlImg(k + "") != "") {
+                    et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                } else {
+                    et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequest(this)'><i class='fa fa-plus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                }       
+            }else{
+                console.log("entro a true");
+                //en el  caso de ke ya se haya enviado la solicitud de amistad los el boton hara ora funcion distinta que sera la de cancelar la solicitud
+                if (urlImg(k + "") != "") {
+                    et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequestCancel(this)'><i class='fa fa-minus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(k + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                } else {
+                    et += "<div class='col-12'><div class='buttonFriendRequestStyleStyle2' onclick='sendRequestCancel(this)'><i class='fa fa-minus' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                }  
+            }
         }
+
+
     }
     et+="<br><br>";
     document.getElementById('infoMessagesGroup').innerHTML="(Mostrando todos)";
@@ -475,7 +493,15 @@ function verSolicitud(name){
 
 
 
+//funcion que calcela la solicitud
 
+function sendRequestCancel(name){
+ //console.log(name.parentNode.childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0]);
+    var nombre=stripHtmlTags(name.parentNode.childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0]);
+    var refCancelarPeticion= databaseService.ref('friendRequest').child(idItem(nombre)).child(id.value);
+    refCancelarPeticion.remove();
+    console.log("La solicitud de amistad fue enviada correctamente");
+}
 
 
 
@@ -522,11 +548,6 @@ function sendRequest(name){
 // fin de la funcion ke envia la peticion
 
 
-// funcion que revisara si la peticion de amistad fue enviada
-
-function reviewFriendshipRequest(id){
-
-} 
 
 
 
