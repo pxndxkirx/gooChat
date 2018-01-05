@@ -341,3 +341,40 @@ input:focus {
     right: 2px;
     margin-top: 5px;
 }
+
+
+.buttonFriendRequestStyle{
+	background: #19212b;
+	border-radius: 0px;
+	border:1px solid white;
+	margin-left:10px;
+	outline-color: transparent;
+	color:white;
+	width: 35px;
+	border-radius: 50% 50%;
+	height: 35px;	
+}
+.buttonFriendRequestStyle:hover{
+	background: #252f3c;
+	outline-color: transparent;
+}	
+
+.buttonFriendRequestStyleStyle2{
+	text-align: center;
+	font-size: 15px;
+	padding: 5px 5px;
+	color: white;
+	border-radius: 50% 50%;
+	position: absolute;
+	background: #19212b;
+	border:1px solid white;
+	width: 35px;
+	height: 35px;
+	right: 4%;
+	cursor: pointer;
+	margin-top: -3px;
+}
+
+.buttonFriendRequestStyleStyle2:hover{
+	background: #252f3c;
+}
