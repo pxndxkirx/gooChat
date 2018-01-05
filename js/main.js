@@ -169,6 +169,7 @@ function vigilarCambios(){
 
 //esta funcion me proporciona el id del item seleccionado para poder enviarle un mensaje o leer los mensajes seleccionados
 function selectedItem(obj) {
+    document.getElementById('enviarCaja').className="show enviarCaja";
     var nameBussines = stripHtmlTags(obj.childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0]);
     //console.log(nameBussines);
     //console.log(obj);
@@ -559,30 +560,42 @@ function mostrarPeticiones(){
     console.log(jsonFriendRequest);
     for(var key in jsonFriendRequest){
         console.log(key);
-
+  
         console.log("petion de amistad de :"+key);
         console.log("nombre"+ nameBussines(key));
         var nombre=nameBussines(key+'');
-        var descripcion="descripcion";
+        console.log("descripcion "+descriptionId(key+''));
+        var descripcion="";
+        descripcion=descriptionId(key+'');
         var imagen="";
         if(urlImg(key)==""){
             imagen="https://ind.proz.com/zf/images/default_user_512px.png";
         }else{
             imagen=urlImg(key);
         }
-        dat+="<div class='col-12'><div class='viewMessage selectedItem' onclick='selectedItem(this)'><div><div class='viewContact'><img src='"+imagen+"' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div></div></div><div class='message'><h5>"+descripcion+"</h5></div></div></div>    <div id='opcionesAceptar' style='width:98px; float:right;margin-top:-20px'>    <button class='buttonFriendRequestStyle' style='margin-left:10px;'><i class='fa fa-check' aria-hidden='true'></i></button><button class='buttonFriendRequestStyle'><i class='fa fa-minus' aria-hidden='true'></i></button></div></div>";
+        dat+="<div class='col-12'><div class='viewMessage selectedItem' onclick='selectedItem(this)'><div><div class='viewContact'><img src='"+imagen+"' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>"+nombre+"</h4></div></div></div><div class='message'><h5>"+descripcion+"</h5></div></div></div>    <div id='opcionesAceptar' style='width:98px; float:right;margin-top:-20px'>    <button class='buttonFriendRequestStyle' style='margin-left:10px;'><i class='fa fa-check' aria-hidden='true'></i></button><button onclick='toRefuse(this)' class='buttonFriendRequestStyle'><i class='fa fa-minus' aria-hidden='true'></i></button></div></div>";
         dat+="<br><br>";
         info++;
+  
     }
     dat+="<br><br>";
     document.getElementById('infoFrienRequest').innerHTML=info;
     document.getElementById("viewMessages2").innerHTML=dat;
 }
 
+function descriptionId(i){
+    var itemTemporal=jsonListUser[i];   
+    return itemTemporal['description'];
+}
 
 
 
+//esta funciion es para rechazar las peticiones de amistad
 
+
+function toRefuse(obj){
+    console.log(obj);
+}
 
 
 
