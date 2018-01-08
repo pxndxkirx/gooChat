@@ -379,3 +379,9 @@ input:focus {
 .buttonFriendRequestStyleStyle2:hover{
 	background: #252f3c;
 }
+
+
+.deleteCircle{
+    margin-right: -15px;
+    margin-top: -10px;
+}
