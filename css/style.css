@@ -385,3 +385,8 @@ input:focus {
     margin-right: -15px;
     margin-top: -10px;
 }
+
+
+#opcionMensajes{
+    z-index: 10000;
+}

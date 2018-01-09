@@ -23,6 +23,8 @@ var id;
 function idClient() {
     //doy valor a las variables de los eventos
     id = document.getElementById('id');
+
+    myOnLine();
     //console.log("entro al idClient " + id.value);
     refListUser = firebase.database().ref().child('list_user');
     refBusiness_circle = firebase.database().ref().child('business_circle').child(id.value);
@@ -50,6 +52,9 @@ function vigilarCambios() {
             jsonFriendRequest = JSON.parse(jsonFriendRequest);
             mostrarPeticiones();
         });
+
+        showCircles();
+
     });
     //recupero la lista de peticiones de amistad
     refFriendRequest.on("value", snap => {
@@ -64,6 +69,7 @@ function vigilarCambios() {
         latestMessage();
        // console.log("mostrando mensajes desde la referencia");
         mostrarMensajesChat();
+
         //console.log("mostrando mensajes desde la referencia2");
     });
 
@@ -76,8 +82,27 @@ function vigilarCambios() {
     });
 
 }
-//funcion que muestra los circulos del ususario
+//funcion que pone el estado en linea de mi user
 
+function myOnLine(){
+    refOnLine= firebase.database().ref().child('list_user').child(id.value);
+    refOnLine.update({
+        online:true
+    });   
+}
+
+
+function myOfLine(){
+    refOnLine= firebase.database().ref().child('list_user').child(id.value);
+    refOnLine.update({
+        online:false
+    });  
+}
+
+
+
+
+//funcion que muestra los circulos del ususario
 
 function showCircles(){
      //mostrando los datos
@@ -87,28 +112,46 @@ function showCircles(){
         for (var key in jsonBusiness_circle) {
             var nombre = jsonBusiness_circle[key].name_bussines;
             var descripcion = jsonBusiness_circle[key].description;
-            if (urlImg(key + "") != "") {
-                viewMessage += "<br><div class='col-12'><div class='buttonFriendRequestStyleStyle2 deleteCircle' onclick='deleteCircle(this)'><i class='fa fa-trash' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(key + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
-            } else {
-                viewMessage += "<br><div class='col-12'><div class='buttonFriendRequestStyleStyle2 deleteCircle' onclick='deleteCircle(this)'><i class='fa fa-trash' aria-hidden='true'></i></div><div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+           
+
+            var eto="<div style='position:absolute;background:green;border-radius:50% 50%;width:20px;height:20px;border:2px solid #19212b;margin-top:25px;margin-left:15px;'></div>";
+            var etd="<div style='position:absolute;background:gray;border-radius:50% 50%;width:20px;height:20px;border:2px solid #19212b;margin-top:25px;margin-left:15px;'></div>";
+
+
+//probando codigo estado en linea 
+            if(viewOnLine(key)){
+                if (urlImg(key + "") != "") {
+                    viewMessage += "<br><div class='col-12'><div class='buttonFriendRequestStyleStyle2 deleteCircle' onclick='deleteCircle(this)'><i class='fa fa-trash' aria-hidden='true'></i></div>"+eto+"<div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(key + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                } else {
+                    viewMessage += "<br><div class='col-12'><div class='buttonFriendRequestStyleStyle2 deleteCircle' onclick='deleteCircle(this)'><i class='fa fa-trash' aria-hidden='true'></i></div>"+eto+"<div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                }
+                ic++;
+            }else{
+                if (urlImg(key + "") != "") {
+                    viewMessage += "<br><div class='col-12'><div class='buttonFriendRequestStyleStyle2 deleteCircle' onclick='deleteCircle(this)'><i class='fa fa-trash' aria-hidden='true'></i></div>"+etd+"<div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='" + urlImg(key + "") + "' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                } else {
+                    viewMessage += "<br><div class='col-12'><div class='buttonFriendRequestStyleStyle2 deleteCircle' onclick='deleteCircle(this)'><i class='fa fa-trash' aria-hidden='true'></i></div>"+etd+"<div class='viewMessage' onclick='selectedItem(this)'><div><div class='viewContact'><img src='https://ind.proz.com/zf/images/default_user_512px.png' class='perfil' alt=''><div class='contacDat'><div class='nameContact'><h4>" + nombre + "</h4></div></div></div><div class='message'><h5>" + descripcion + "</h5></div></div></div></div>";
+                }
+                ic++;
             }
-            ic++;
         }
         viewMessage += "<br><br><br>";
         document.getElementById('viewMessage').innerHTML = viewMessage;
         document.getElementById("infoContact").innerHTML = ic;
 }
-
-
-
-
-
-
-
-
-
-
-
+//funcion que revisa si esta en linea o no
+function viewOnLine(id){
+    for(var key in jsonListUser){
+        if(key==id){
+            if(jsonListUser[key].online){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+    return false;
+}
 
 
 //funcion que elimina a una empresa de tus circulos
@@ -120,31 +163,6 @@ function deleteCircle(obj){
     myDelete.remove();
     yourDelete.remove();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //funcion que muestra los ultimos mensajes de cada chat
@@ -221,6 +239,7 @@ function latestMessage(){
             console.log(jsonTempOrdenado[k].nombre);
             try{
                 if(jsonTempOrdenado[k].indi!=0){
+                    tono();
                     contador++;
                     etiqueta = "<div class='indicator'>" + jsonTempOrdenado[k].indi + "</div>";
                     if(jsonTempOrdenado[k].url_img!=""){
@@ -270,9 +289,32 @@ function newDate(a,h){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //esta funcion me proporciona el id del item seleccionado para poder enviarle un mensaje o leer los mensajes seleccionados
 function selectedItem(obj) {
     document.getElementById('enviarCaja').className = "show enviarCaja";
+    console.log(obj);
     var nameBussines = stripHtmlTags(obj.childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0]);
     var a = document.getElementsByClassName("viewMessage");
 
@@ -290,7 +332,35 @@ function selectedItem(obj) {
 
     document.getElementById('messagesContainer').innerHTML = "";
     mostrarMensajesChat();
+
+    //probando codigo para ocultar y mostrar los mensajes
+    if(screen.width<992){
+        document.getElementById('opcionMensajes').style.display="none";
+        document.getElementById('scrollContainer').style.display="block";
+    }
+    //fin de la prueba de codigo
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //elimina etiquetas de un objeto
 function stripHtmlTags(elemento) {
@@ -742,3 +812,18 @@ function mostrarSolicitudes() {
     document.getElementById("buttonFriendRequest").className = "col-xs-3 col-sm-3 col-md-3 optionButton selected";
   
 };
+
+
+window.onbeforeunload = salir;
+ 
+
+function salir()
+{
+    myOfLine();
+}
+
+function tono(){
+    var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'audio/ding.mp3');
+    audioElement.play();
+}

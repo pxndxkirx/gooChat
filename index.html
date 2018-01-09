@@ -11,7 +11,7 @@
 
 <body>
 	<div class="row contentChat">
-		<div class="col-md-4 col-md-41" >
+		<div class="col-md-4 col-md-41" id="opcionMensajes">
 			<div class="contact">
 				<div class="row">
 					<div class="col-md-9">
@@ -124,50 +124,42 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		</div>
-		<div class="col-md-8 col-md-81" id="scrollContainer" style="overflow-y: auto;overflow-x: hidden;">
-			
-			<ul style="height: 100%;" id="messagesContainer">
-			<br><br><br>
-				<!-- <h2>Bienvenid al chat</h2> -->
-
-				<br>
-				<br>
-				<br>
-			</ul>
+		
+		<!-- contenedor de los mensajes enviados o recibidos -->
+		
+			<div class="col-md-8 col-md-12 col-md-81" id="scrollContainer" style="overflow-y: auto;overflow-x: hidden;position: relative;">
 
 
 
+				<ul style="height: 100%;" id="messagesContainer">
+				<br><br><br>
+					<!-- <h2>Bienvenid al chat</h2> -->
+
+					<br>
+					<br>
+					<br>
+				</ul>
 
 
 
-			<div class="row send" style="position: fixed;">
-				<div class="col-xs-11 col-sm-11 col-md-7">
-					<input type="text" placeholder="Envia un mensaje" class="hide enviarCaja" id="enviarCaja">
+
+
+
+				<div class="row send" style="position: fixed;">
+					<div class="col-xs-11 col-sm-11 col-md-7">
+						<input type="text" placeholder="Envia un mensaje" class="hide enviarCaja" id="enviarCaja">
+					</div>
 				</div>
 			</div>
-		</div>
+
+
+
+
 	</div>
    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script src="js/codeConetion.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/desing.js"></script>
 </body>
 </html>
